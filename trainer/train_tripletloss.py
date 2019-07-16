@@ -1,28 +1,3 @@
-"""Training a face recognizer with TensorFlow based on the FaceNet paper
-FaceNet: A Unified Embedding for Face Recognition and Clustering: http://arxiv.org/abs/1503.03832
-"""
-# MIT License
-#
-# Copyright (c) 2016 David Sandberg
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -41,7 +16,7 @@ import lfw
 
 from tensorflow.python.ops import data_flow_ops
 
-from six.moves import xrange  # @UnresolvedImport
+from six.moves import xrange
 
 
 def main(parameter_dict):
@@ -516,7 +491,7 @@ def trainer(height=512,
         weight_decay=0.0,
         alpha=0.2,
         learning_rate=0.1,
-        learning_rate_schedule_file='data/learning_rate_schedule.txt',
+        learning_rate_schedule_file='dataset/learning_rate_retrain_tripletloss.txt',
         learning_rate_decay_epochs=100,
         learning_rate_decay_factor=1,
         moving_average_decay=0.9999,
