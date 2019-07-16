@@ -78,7 +78,7 @@ def main(parameter_dict):
                 file_contents = tf.read_file(filename)
                 image = tf.image.decode_image(file_contents, channels=3)
 
-                image = tf.image.resize_image_with_pad(image, parameter_dict['image_size'], parameter_dict['image_size'])
+                image = tf.image.resize_image_with_pad(image, parameter_dict['height'], parameter_dict['width'])
 
                 # pylint: disable=no-member
                 image.set_shape((parameter_dict['height'], parameter_dict['width'], 3))
