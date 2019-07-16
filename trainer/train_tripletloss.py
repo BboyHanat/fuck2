@@ -42,12 +42,12 @@ def main(parameter_dict):
     if parameter_dict['pretrained_model']:
         print('Pre-trained model: %s' % os.path.expanduser(parameter_dict['pretrained_model']))
 
-    if parameter_dict['lfw_dir']:
-        print('LFW directory: %s' % parameter_dict['lfw_dir'])
-        # Read the file containing the pairs used for testing
-        pairs = lfw.read_pairs(os.path.expanduser(parameter_dict['lfw_pairs']))
-        # Get the paths for the corresponding images
-        lfw_paths, actual_issame = lfw.get_paths(os.path.expanduser(parameter_dict['lfw_dir']), pairs)
+    # if parameter_dict['lfw_dir']:
+    #     print('LFW directory: %s' % parameter_dict['lfw_dir'])
+    #     # Read the file containing the pairs used for testing
+    #     pairs = lfw.read_pairs(os.path.expanduser(parameter_dict['lfw_pairs']))
+    #     # Get the paths for the corresponding images
+    #     lfw_paths, actual_issame = lfw.get_paths(os.path.expanduser(parameter_dict['lfw_dir']), pairs)
 
     with tf.Graph().as_default():
         tf.set_random_seed(parameter_dict['seed'])
