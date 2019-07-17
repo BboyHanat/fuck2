@@ -22,7 +22,9 @@ def get_data_shuffle(class_root, train=True):
     :return:
     """
 
-    fp = open("labels.txt", 'w+')
+    fp = None
+    if train:
+        fp = open("labels.txt", 'w+')
     class_path = [os.path.join(class_root, img_path) for img_path in os.listdir(class_root)
                   if os.path.isdir(os.path.join(class_root, img_path))]
     class_path.sort()
@@ -64,14 +66,15 @@ def trainer(train_img_root,
             epoch=64
             ):
     """
-
+    trainer
     :param train_img_root:
     :param val_img_root:
     :param height:
     :param width:
     :param channels:
     :param class_num:
-    :param batch_size:
+    :param train_batch_size:
+    :param val_batch_size:
     :param epoch:
     :return:
     """
