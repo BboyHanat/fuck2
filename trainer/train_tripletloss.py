@@ -267,8 +267,8 @@ def select_triplets(embeddings, nrof_images_per_class, image_paths, people_per_b
                     rnd_idx = np.random.randint(nrof_random_negs)
                     n_idx = all_neg[rnd_idx]
                     triplets.append((image_paths[a_idx], image_paths[p_idx], image_paths[n_idx]))
-                    # print('Triplet %d: (%d, %d, %d), pos_dist=%2.6f, neg_dist=%2.6f (%d, %d, %d, %d, %d)' %
-                    #    (trip_idx, a_idx, p_idx, n_idx, pos_dist_sqr, neg_dists_sqr[n_idx], nrof_random_negs, rnd_idx, i, j, emb_start_idx))
+                    print('Triplet %d: (%d, %d, %d), pos_dist=%2.6f, neg_dist=%2.6f (%d, %d, %d, %d, %d)' %
+                       (trip_idx, a_idx, p_idx, n_idx, pos_dist_sqr, neg_dists_sqr[n_idx], nrof_random_negs, rnd_idx, i, j, emb_start_idx))
                     trip_idx += 1
 
                 num_trips += 1
