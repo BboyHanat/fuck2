@@ -138,7 +138,8 @@ def main(parameter_dict):
 
             if parameter_dict['pretrained_model']:
                 print('Restoring pretrained model: %s' % parameter_dict['pretrained_model'])
-                saver.restore(sess, os.path.expanduser(parameter_dict['pretrained_model']))
+                model_path = os.path.expanduser(parameter_dict['pretrained_model'])
+                facenet.load_pretrained_model(sess,model_path)
 
             # Training and validation loop
             epoch = 0

@@ -38,6 +38,7 @@ from tensorflow.python.training import training
 import random
 import re
 from tensorflow.python.platform import gfile
+from tensorflow.python import pywrap_tensorflow
 import math
 from six import iteritems
 
@@ -406,6 +407,46 @@ def load_model(model, input_map=None):
 
         saver = tf.train.import_meta_graph(os.path.join(model_exp, meta_file), input_map=input_map)
         saver.restore(tf.get_default_session(), os.path.join(model_exp, ckpt_file))
+
+
+def load_pretrained_model(sess, pretrained_model):
+    """
+    load_pretrained_model
+    :return:
+    """
+
+    def get_variables_in_checkpoint_file(file_name):
+        try:
+            reader = pywrap_tensorflow.NewCheckpointReader(file_name)
+            var_to_shape_map = reader.get_variable_to_shape_map()
+            return var_to_shape_map
+        except Exception as e:  # pylint: disable=broad-except
+            print(str(e))
+            if "corrupted compressed block contents" in str(e):
+                print("It's likely that your checkpoint file has been compressed "
+                      "with SNAPPY.")
+
+    def get_variables_to_restore(variables, var_keep_dic):
+        variables_to_restore = []
+        for v in variables:
+            # exclude
+            if v.name.split(':')[0] in var_keep_dic:
+                print('Variables restored: %s' % v.name)
+                variables_to_restore.append(v)
+            else:
+                print('Variables restored: %s' % v.name)
+        return variables_to_restore
+
+    variables = tf.global_variables()
+    sess.run(tf.variables_initializer(variables, name='init'))
+    print("variables initilized ok")
+    # Get dictionary of model variable
+    var_keep_dic = get_variables_in_checkpoint_file(pretrained_model)
+    # # Get the variables to restore
+    variables_to_restore = get_variables_to_restore(variables, var_keep_dic)
+    restorer = tf.train.Saver(variables_to_restore)
+    restorer.restore(sess, pretrained_model)
+
 
 
 def get_model_filenames(model_dir):
