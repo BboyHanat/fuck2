@@ -58,6 +58,7 @@ from __future__ import print_function
 
 import tensorflow as tf
 from . import resnet_utils
+from .attention_se import se_block
 from tensorflow.contrib import slim
 
 resnet_arg_scope = resnet_utils.resnet_arg_scope
@@ -74,7 +75,7 @@ class NoOpScope(object):
 
 
 def inference(images, keep_probability, phase_train=True,
-              bottleneck_layer_size=128, weight_decay=0.0, reuse=None):
+              bottleneck_layer_size=1024, weight_decay=0.0, reuse=None):
     batch_norm_params = {
         # Decay for the moving averages.
         'decay': 0.995,
@@ -90,7 +91,8 @@ def inference(images, keep_probability, phase_train=True,
                         weights_initializer=slim.initializers.xavier_initializer(),
                         weights_regularizer=slim.l2_regularizer(weight_decay),
                         normalizer_fn=slim.batch_norm,
-                        normalizer_params=batch_norm_params):
+                        normalizer_params=batch_norm_params,
+                        trainable=phase_train):
         net = tf.squeeze(net, [1, 2], name='SpatialSqueeze')
         net = slim.fully_connected(net, bottleneck_layer_size, activation_fn=None,
                                    scope='Bottleneck', reuse=False)
@@ -148,7 +150,7 @@ def bottleneck(inputs,
                                             rate=rate, scope='conv2')
         residual = slim.conv2d(residual, depth, [1, 1], stride=1,
                                activation_fn=None, scope='conv3')
-
+        #residual = se_block(residual, ratio=32)
         if use_bounded_activations:
             # Use clip_by_value to simulate bandpass activation.
             residual = tf.clip_by_value(residual, -6.0, 6.0)
