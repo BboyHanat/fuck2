@@ -16,4 +16,4 @@ batch_size = 60
 epoch_size = 1000
 embedding_size = 1024
 
-trainer(height=512, width=512, people_per_batch=30, images_per_person=100, batch_size=60, epoch_size=1000, embedding_size=1024)
+trainer(height=512, width=512, people_per_batch=30, images_per_person=30, batch_size=60, epoch_size=1000, embedding_size=1024)
