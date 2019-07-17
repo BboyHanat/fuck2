@@ -85,13 +85,12 @@ def inference(images, keep_probability, phase_train=True,
         # Moving averages ends up in the trainable variables collection
         'variables_collections': [tf.GraphKeys.TRAINABLE_VARIABLES],
     }
-
+    net, end_points = resnet_v1_50(images, is_training=phase_train, reuse=reuse)
     with slim.arg_scope([slim.conv2d, slim.fully_connected],
                         weights_initializer=slim.initializers.xavier_initializer(),
                         weights_regularizer=slim.l2_regularizer(weight_decay),
                         normalizer_fn=slim.batch_norm,
                         normalizer_params=batch_norm_params):
-        net, end_points = resnet_v1_50(images, is_training=phase_train, reuse=reuse)
         net = tf.squeeze(net, [1, 2], name='SpatialSqueeze')
         net = slim.fully_connected(net, bottleneck_layer_size, activation_fn=None,
                                    scope='Bottleneck', reuse=False)
