@@ -9,7 +9,7 @@ Desc:
 from tensorflow.python import pywrap_tensorflow
 from tensorflow.contrib import slim
 from libs.resnet_v1 import *
-from libs.data_perprocess import *
+from libs.data_preprocess import *
 import numpy as np
 import os
 
