@@ -48,7 +48,7 @@ class ClassificationNet:
         self.data_perprocess_op = data_perprocess_op
         self.train_backbone = train_backbone
         self.pretrained_model = pretrained_model
-        self.optimizer, self.loss, self.output, self.acc = self.graph(learning_rate=0.0001)
+        self.optimizer, self.loss, self.output, self.acc = self.graph(learning_rate=0.001)
         if pretrained_model is not None:
             self.load_pretrained_model()
 
