@@ -48,7 +48,7 @@ class ClassificationNet:
         self.data_perprocess_op = data_perprocess_op
         self.train_backbone = train_backbone
         self.pretrained_model = pretrained_model
-        self.optimizer, self.loss, self.output, self.acc = self.graph(learning_rate=0.001)
+        self.optimizer, self.loss, self.output, self.acc, self.softmax_loss_b = self.graph(learning_rate=0.001)
         if pretrained_model is not None:
             self.load_pretrained_model()
 
@@ -67,12 +67,12 @@ class ClassificationNet:
         print("logit shape:", logit.get_shape())
 
         one_hot = tf.one_hot(self.labels, self.class_num)
-        softmax_loss = tf.nn.softmax_cross_entropy_with_logits_v2(labels=one_hot, logits=logit)
-        softmax_loss = tf.reduce_mean(softmax_loss)
+        softmax_loss_b = tf.nn.softmax_cross_entropy_with_logits_v2(labels=one_hot, logits=logit)
+        softmax_loss = tf.reduce_mean(softmax_loss_b)
         correct_prediction = tf.equal(tf.argmax(logit, 1), tf.argmax(one_hot, 1))
         acc = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
         optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate).minimize(softmax_loss)  # , global_step=global_step)
-        return optimizer, softmax_loss, logit, acc
+        return optimizer, softmax_loss, logit, acc, softmax_loss_b
 
     def load_pretrained_model(self):
         """
@@ -125,6 +125,11 @@ class ClassificationNet:
         :param ckpt_path:
         :return:
         """
+        fp1 = open("hard.txt","w+")
+        fp = open("labels.txt",'r')
+        lines = fp.readlines()
+        labels = [int(label.split(':')[0]) for label in lines]
+        names = [label.split(':')[1] for label in lines]
         print("Start Training")
         iterator_train = dataset_train.make_initializable_iterator()
         init_op_train = iterator_train.make_initializer(dataset_train)
@@ -140,11 +145,26 @@ class ClassificationNet:
         for epoch in range(epochs):
             for step in range((epoch * training_iters), ((epoch + 1) * training_iters)):
                 batch_x, batch_y = self.sess.run(iterator_train)
-                loss, _ = self.sess.run([self.loss, self.optimizer], feed_dict={self.images: batch_x,
-                                                                                self.labels: batch_y,
-                                                                                })
+                loss = self.sess.run(self.loss, feed_dict={self.images: batch_x,
+                                                           self.labels: batch_y
+                                                           })
+                if loss > 1:
+                    softmax_loss_b = self.sess.run(self.softmax_loss_b, feed_dict={self.images: batch_x,
+                                                                                   self.labels: batch_y
+                                                                                   })
+                    for i in range(softmax_loss_b.shape[0]):
+                        if softmax_loss_b[i]>1:
+                            index = labels.index(batch_y[i])
+                            logs = 'label: {}, name: {}'.format(batch_y[i],names[index])
+                            print(logs)
+                            fp1.write(logs+"\n")
+
+                self.sess.run(self.optimizer, feed_dict={self.images: batch_x,
+                                                         self.labels: batch_y
+                                                         })
+
                 # validation on training
-                if step % val_interval == 0 and step > val_interval:
+                if step % val_interval == 0 and step >= val_interval:
                     accuarys = 0.0
                     losses = 0.0
                     for i in range(val_iters):
@@ -155,7 +175,7 @@ class ClassificationNet:
                     print("Accuary: {}, Loss: {}".format((accuarys / val_iters), (losses / val_iters)))
                 if step % show_step == 0 and step > 0:
                     print("epoch: {} , step: {} , Loss: {}".format(epoch, step, loss))
-            ckpt_name = self.backbones + '_center_loss_' + str(epoch) + '.ckpt'
+            ckpt_name = self.backbones + '_' + str(epoch) + '.ckpt'
             saver.save(self.sess, os.path.join(ckpt_path, ckpt_name))
         coord.request_stop()
 
