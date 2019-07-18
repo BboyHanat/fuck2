@@ -148,20 +148,6 @@ class ClassificationNet:
                 loss = self.sess.run(self.loss, feed_dict={self.images: batch_x,
                                                            self.labels: batch_y
                                                            })
-                if loss > 1:
-                    softmax_loss_b = self.sess.run(self.softmax_loss_b, feed_dict={self.images: batch_x,
-                                                                                   self.labels: batch_y
-                                                                                   })
-                    for i in range(softmax_loss_b.shape[0]):
-                        if softmax_loss_b[i]>1:
-                            index = labels.index(batch_y[i])
-                            logs = 'label: {}, name: {}'.format(batch_y[i],names[index])
-                            print(logs)
-                            fp1.write(logs+"\n")
-
-                self.sess.run(self.optimizer, feed_dict={self.images: batch_x,
-                                                         self.labels: batch_y
-                                                         })
 
                 # validation on training
                 if step % val_interval == 0 and step >= val_interval:
@@ -174,7 +160,20 @@ class ClassificationNet:
                         losses += loss
                     print("Accuary: {}, Loss: {}".format((accuarys / val_iters), (losses / val_iters)))
                 if step % show_step == 0 and step > 0:
+                    if loss > 1:
+                        softmax_loss_b = self.sess.run(self.softmax_loss_b, feed_dict={self.images: batch_x,
+                                                                                       self.labels: batch_y
+                                                                                       })
+                        for i in range(softmax_loss_b.shape[0]):
+                            if softmax_loss_b[i] > 1:
+                                index = labels.index(batch_y[i])
+                                logs = 'label: {}, name: {}'.format(batch_y[i], names[index])
+                                print(logs)
+                                fp1.write(logs + "\n")
                     print("epoch: {} , step: {} , Loss: {}".format(epoch, step, loss))
+                self.sess.run(self.optimizer, feed_dict={self.images: batch_x,
+                                                         self.labels: batch_y
+                                                         })
             ckpt_name = self.backbones + '_' + str(epoch) + '.ckpt'
             saver.save(self.sess, os.path.join(ckpt_path, ckpt_name))
         coord.request_stop()
