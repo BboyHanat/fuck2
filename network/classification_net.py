@@ -168,8 +168,8 @@ class ClassificationNet:
                             if softmax_loss_b[i] > 1:
                                 predict = np.argmax(logit[i])
                                 index = labels.index(batch_y[i])
-                                predict_index = labels.index(predict[0])
-                                logs = 'predict_label: {}, predict_name: {}, label: {}, name: {}'.format(predict[0], names[predict_index], batch_y[i], names[index])
+                                predict_index = labels.index(predict)
+                                logs = 'predict_label: {}, predict_name: {}, label: {}, name: {}'.format(predict, names[predict_index], batch_y[i], names[index])
                                 print(logs)
                                 fp1.write(logs + "\n")
                     print("epoch: {} , step: {} , Loss: {}".format(epoch, step, loss))
