@@ -118,7 +118,7 @@ def trainer(train_img_root,
                             height=height,
                             channels=channels,
                             class_num=class_num,
-                            train_backbone=True
+                            train_backbone=False
                             )
     net.train(dataset_train=dataset_train,
               dataset_val=dataset_val,
