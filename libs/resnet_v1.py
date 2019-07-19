@@ -150,7 +150,7 @@ def bottleneck(inputs,
                                             rate=rate, scope='conv2')
         residual = slim.conv2d(residual, depth, [1, 1], stride=1,
                                activation_fn=None, scope='conv3')
-        residual = se_block(residual, ratio=32,name="channel_attention")
+        #residual = se_block(residual, ratio=32, name="channel_attention")
         if use_bounded_activations:
             # Use clip_by_value to simulate bandpass activation.
             residual = tf.clip_by_value(residual, -6.0, 6.0)
