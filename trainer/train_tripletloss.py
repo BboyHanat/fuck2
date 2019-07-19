@@ -472,9 +472,9 @@ def trainer(height=512,
     :return:
     """
     training_parm = dict(
-        data_dir="./dataset/train_fonts99/train",  # 训练数据的路径
+        data_dir="./dataset/train_fonts42/train",  # 训练数据的路径
         channels=3,
-        class_num=109,
+        class_num=42,
         logs_base_dir='/logs/facenet',
         models_base_dir='./weight/train/triplet',
         pretrained_model='./weight/pretrained/resnet_v1_50.ckpt',
