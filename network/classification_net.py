@@ -150,15 +150,15 @@ class ClassificationNet:
                                                            })
 
                 # validation on training
-                if step % val_interval == 0 and step >= val_interval:
-                    accuarys = 0.0
-                    losses = 0.0
-                    for i in range(val_iters):
-                        val_batch_x, val_batch_y = self.sess.run(iterator_val)
-                        acc, loss = self.sess.run([self.acc, self.loss], feed_dict={self.images: val_batch_x, self.labels: val_batch_y})
-                        accuarys += acc
-                        losses += loss
-                    print("Accuary: {}, Loss: {}".format((accuarys / val_iters), (losses / val_iters)))
+                # if step % val_interval == 0 and step >= val_interval:
+                #     accuarys = 0.0
+                #     losses = 0.0
+                #     for i in range(val_iters):
+                #         val_batch_x, val_batch_y = self.sess.run(iterator_val)
+                #         acc, loss = self.sess.run([self.acc, self.loss], feed_dict={self.images: val_batch_x, self.labels: val_batch_y})
+                #         accuarys += acc
+                #         losses += loss
+                #     print("Accuary: {}, Loss: {}".format((accuarys / val_iters), (losses / val_iters)))
                 if step % show_step == 0 and step > 0:
                     if loss > 1:
                         softmax_loss_b = self.sess.run(self.softmax_loss_b, feed_dict={self.images: batch_x,
