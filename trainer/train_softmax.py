@@ -60,7 +60,7 @@ def trainer(train_img_root,
             height=512,
             width=512,
             channels=3,
-            class_num=90,
+            class_num=42,
             train_batch_size=16,
             val_batch_size=16,
             epoch=64
