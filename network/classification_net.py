@@ -150,24 +150,26 @@ class ClassificationNet:
                                                            })
 
                 # validation on training
-                # if step % val_interval == 0 and step >= val_interval:
-                #     accuarys = 0.0
-                #     losses = 0.0
-                #     for i in range(val_iters):
-                #         val_batch_x, val_batch_y = self.sess.run(iterator_val)
-                #         acc, loss = self.sess.run([self.acc, self.loss], feed_dict={self.images: val_batch_x, self.labels: val_batch_y})
-                #         accuarys += acc
-                #         losses += loss
-                #     print("Accuary: {}, Loss: {}".format((accuarys / val_iters), (losses / val_iters)))
+                if step % val_interval == 0 and step >= val_interval:
+                    accuarys = 0.0
+                    losses = 0.0
+                    for i in range(val_iters):
+                        val_batch_x, val_batch_y = self.sess.run(iterator_val)
+                        acc, loss = self.sess.run([self.acc, self.loss], feed_dict={self.images: val_batch_x, self.labels: val_batch_y})
+                        accuarys += acc
+                        losses += loss
+                    print("Accuary: {}, Loss: {}".format((accuarys / val_iters), (losses / val_iters)))
                 if step % show_step == 0 and step > 0:
                     if loss > 1:
-                        softmax_loss_b = self.sess.run(self.softmax_loss_b, feed_dict={self.images: batch_x,
+                        softmax_loss_b, logit = self.sess.run([self.softmax_loss_b, self.output], feed_dict={self.images: batch_x,
                                                                                        self.labels: batch_y
                                                                                        })
                         for i in range(softmax_loss_b.shape[0]):
                             if softmax_loss_b[i] > 1:
+                                predict = np.argmax(logit[i])
                                 index = labels.index(batch_y[i])
-                                logs = 'label: {}, name: {}'.format(batch_y[i], names[index])
+                                predict_index = labels.index(predict[0])
+                                logs = 'predict_label: {}, predict_name: {}, label: {}, name: {}'.format(predict[0], names[predict_index], batch_y[i], names[index])
                                 print(logs)
                                 fp1.write(logs + "\n")
                     print("epoch: {} , step: {} , Loss: {}".format(epoch, step, loss))
