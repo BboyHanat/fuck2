@@ -96,7 +96,7 @@ def main(parameter_dict):
 
         # Build the inference graph
         prelogits, _ = network.inference(image_batch, parameter_dict['keep_probability'],
-                                         phase_train=phase_train_placeholder, bottleneck_layer_size=parameter_dict['embedding_size'],
+                                         phase_train=True, bottleneck_layer_size=parameter_dict['embedding_size'],
                                          weight_decay=parameter_dict['weight_decay'])
 
         embeddings = tf.nn.l2_normalize(prelogits, 1, 1e-10, name='embeddings')
