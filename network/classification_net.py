@@ -63,7 +63,7 @@ class ClassificationNet:
         :return:
         """
         net, end_points = inference(self.images, keep_probability=1, phase_train=self.train_backbone)
-        logit = slim.fully_connected(net, self.class_num, activation_fn=None, scope='classification_node', reuse=False)
+        logit = slim.fully_connected(net, self.class_num, activation_fn=None, scope='classification_node1', reuse=False)
         print("logit shape:", logit.get_shape())
 
         one_hot = tf.one_hot(self.labels, self.class_num)
