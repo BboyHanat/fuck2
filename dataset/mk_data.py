@@ -15,7 +15,7 @@ back_ground_dir = train_or_val + '_bg/'
 
 font_data_dir = 'fonts/'
 
-single_font_data_dir = 'trian_fonts29/' + train_or_val + '/'
+single_font_data_dir = 'train_fonts29/' + train_or_val + '/'
 
 multi_font_data_dir = 'mix/'
 
