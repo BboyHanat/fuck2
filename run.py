@@ -12,6 +12,6 @@ from trainer import train_tripletloss, train_softmax
 # train_tripletloss.trainer(height=512, width=512, people_per_batch=30, images_per_person=10, batch_size=60, epoch_size=1000, embedding_size=1024)
 
 # train classification network
-train_img_root = "./dataset/train_fonts42/train"
-val_img_root = "./dataset/train_fonts42/val"
-train_softmax.trainer(train_img_root, val_img_root, height=512, width=512, channels=3, class_num=42, train_batch_size=32, val_batch_size=16, epoch=64)
+train_img_root = "./dataset/train_fonts29/train"
+val_img_root = "./dataset/train_fonts29/val"
+train_softmax.trainer(train_img_root, val_img_root, height=512, width=512, channels=3, class_num=29, train_batch_size=32, val_batch_size=16, epoch=64)

@@ -472,7 +472,7 @@ def trainer(height=512,
     :return:
     """
     training_parm = dict(
-        data_dir="./dataset/train_fonts42/train",  # 训练数据的路径
+        data_dir="./dataset/train_fonts29/train",  # 训练数据的路径
         channels=3,
         class_num=42,
         logs_base_dir='/logs/facenet',
