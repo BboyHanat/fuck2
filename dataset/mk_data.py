@@ -13,7 +13,7 @@ from multiprocessing import Pool
 train_or_val = 'train'
 back_ground_dir = train_or_val + '_bg/'
 
-font_data_dir = '印刷体/'
+font_data_dir = 'fonts/'
 
 single_font_data_dir = 'trian_fonts29/' + train_or_val + '/'
 
