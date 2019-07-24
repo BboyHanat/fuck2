@@ -10,7 +10,7 @@ Desc:
 from trainer import train_tripletloss, train_softmax
 
 # train tripletloss
-train_tripletloss.trainer(height=512, width=512, people_per_batch=30, images_per_person=10, batch_size=60, epoch_size=1000, embedding_size=1024)
+train_tripletloss.trainer(height=512, width=512, people_per_batch=27, images_per_person=10, batch_size=54, epoch_size=1000, embedding_size=1024)
 
 # train classification network
 train_img_root = "./dataset/train_fonts29/train"
