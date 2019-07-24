@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Name : classification_net.py
 Author  : Hanat

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Name : train_center_loss.py
 Author  : Hanat
