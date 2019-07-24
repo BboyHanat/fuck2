@@ -158,7 +158,7 @@ def draw_pic(font_bg_combo):
 if __name__ == '__main__':
     # len(fonts)=198,dfp:109
     res = mk_single_data()
-    pool_num = 4
+    pool_num = 1
     p = Pool(pool_num)
     # draw_pic(res[0])
     p.map(draw_pic, res)
