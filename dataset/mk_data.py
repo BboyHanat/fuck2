@@ -12,7 +12,7 @@ import copy
 
 from multiprocessing import Pool
 
-train_or_val = 'train'
+train_or_val = 'val'
 back_ground_dir = train_or_val + '_bg/'
 
 font_data_dir = 'fonts/'
