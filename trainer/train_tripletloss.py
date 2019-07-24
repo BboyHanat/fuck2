@@ -83,7 +83,9 @@ def main(parameter_dict):
 
                 # pylint: disable=no-member
                 image.set_shape((parameter_dict['height'], parameter_dict['width'], 3))
-                images.append(tf.image.per_image_standardization(image))
+                image = image - 114.8
+                images.append(image)
+                #images.append(tf.image.per_image_standardization(image))
             images_and_labels.append([images, label])
 
         image_batch, labels_batch = tf.train.batch_join(
