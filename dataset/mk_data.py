@@ -148,8 +148,7 @@ def draw_pic(font_bg_combo):
         image1 = image1.crop((x, y, x + text_size[0], y + text_size[1]))
         class_name = font[1].split('/')[-1].split('.')[0]
         savepath = os.path.join(single_font_data_dir, class_name)
-        if not os.path.exists(savepath):
-            os.mkdir(savepath)
+        os.makedirs(savepath)
         image1.save((savepath + "/" + "class_name_{}_{}.jpg").format(id, index))  # [x+109 for x in fonts_id]
 
 
