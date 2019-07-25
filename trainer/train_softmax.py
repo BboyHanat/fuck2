@@ -115,7 +115,7 @@ def trainer(train_img_root,
 
     net = ClassificationNet(sess=sess,
                             backbones='resnet_v1_50',
-                            pretrained_model='weight/pretrained/model-20190717-030305.ckpt-17902',
+                            pretrained_model='weight/pretrained/model-20190725-021948.ckpt-16320',
                             width=width,
                             height=height,
                             channels=channels,
