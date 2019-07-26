@@ -115,12 +115,12 @@ def trainer(train_img_root,
 
     net = ClassificationNet(sess=sess,
                             backbones='resnet_v1_50',
-                            pretrained_model='weight/pretrained/model-20190725-021948.ckpt-16320',
+                            pretrained_model='weight/pretrained/resnet_v1_50.ckpt',
                             width=width,
                             height=height,
                             channels=channels,
                             class_num=class_num,
-                            train_backbone=False
+                            train_backbone=True
                             )
     net.train(dataset_train=dataset_train,
               dataset_val=dataset_val,
