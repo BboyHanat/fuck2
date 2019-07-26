@@ -84,8 +84,8 @@ def trainer(train_img_root,
         image_string = tf.read_file(filename)
         image_decoded = tf.image.decode_image(image_string)
         image_resized = tf.image.resize_image_with_pad(image_decoded, height, width)
-        image_resized = image_resized - 114.8
-        #image_resized = tf.image.per_image_standardization(image_resized)
+        #image_resized = image_resized - 114.8
+        image_resized = tf.image.per_image_standardization(image_resized)
         label = tf.cast(label, tf.float32)
         return image_resized, label
 
